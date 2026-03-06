@@ -1,9 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
-from typing import List
-from app.auth.security import get_current_user
-from app.models.user import User
-from app.models.schemas import CurrencyConversion
-from app.currency.external_api import get_exchange_rates, get_supported_currencies, convert_currency
+from backend.app.auth.security import get_current_user
+from backend.app.models.user import User
+from backend.app.models.schemas import CurrencyConversion
+from backend.app.currency.external_api import get_exchange_rates, get_supported_currencies, convert_currency
 
 router = APIRouter(prefix="/currency", tags=["currency"])
 

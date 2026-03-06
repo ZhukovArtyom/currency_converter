@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     EXCHANGE_API_URL: str = "https://api.exchangerate-api.com/v4/latest/"
 
     class Config:
-        env_file = ".env"
+        env_file = "../.env"
 
 
 settings = Settings()

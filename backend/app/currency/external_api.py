@@ -1,6 +1,6 @@
 import requests
 from fastapi import HTTPException
-from app.config import settings
+from backend.app.config import settings
 
 
 def get_exchange_rates(base_currency: str = "USD"):

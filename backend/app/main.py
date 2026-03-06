@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.database import engine, Base
-from app.auth import users
-from app.currency import currency
+from .database import engine, Base
+from .auth import users
+from .currency import currency
 
 # Создание таблиц в базе данных
 Base.metadata.create_all(bind=engine)
