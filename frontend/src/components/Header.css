@@ -57,28 +57,28 @@
   transform: translateY(-2px);
 }
 
-.btn-login {
-  background: #3498db;
-  border: none;
-  cursor: pointer;
+/* Стили для кнопок входа и регистрации (это ссылки) */
+.nav-links li a.btn-login,
+.nav-links li a.btn-register {
+  background: #6d9ebf;  /* Новый цвет */
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 5px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-block;
 }
 
-.btn-login:hover {
-  background: #2980b9;
+.nav-links li a.btn-login:hover,
+.nav-links li a.btn-register:hover {
+  background: #5a8bb0;  /* Чуть темнее для эффекта наведения */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.btn-register {
-  background: #2ecc71;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-register:hover {
-  background: #27ae60;
-}
-
+/* Стиль для кнопки выхода (это button) */
 .btn-logout {
-  background: #e74c3c;
+  background: #6d9ebf;  /* Тот же цвет */
   color: white;
   border: none;
   padding: 0.5rem 1.5rem;
@@ -87,10 +87,22 @@
   font-weight: 500;
   transition: all 0.3s ease;
   font-size: 1rem;
+  font-family: inherit;
 }
 
 .btn-logout:hover {
-  background: #c0392b;
+  background: #5a8bb0;  /* Тот же цвет для наведения */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Убираем лишние фоны у обычных ссылок в навигации */
+.nav-links li a:not(.btn-login):not(.btn-register) {
+  background: transparent;
+}
+
+.nav-links li a:not(.btn-login):not(.btn-register):hover {
+  background: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
 }
 
@@ -112,6 +124,8 @@
     font-size: 0.9rem;
   }
 
+  .nav-links li a.btn-login,
+  .nav-links li a.btn-register,
   .btn-logout {
     padding: 0.4rem 1rem;
     font-size: 0.9rem;

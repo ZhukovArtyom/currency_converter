@@ -1,16 +1,22 @@
-.page-container {
-  min-height: calc(100vh - 200px);
-  padding: 2rem 0;
+/* Home Page */
+.home-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%; /* Занимает всю высоту main-content */
 }
 
-/* Home Page */
 .home-page .hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   padding: 4rem 2rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  border-radius: 10px;
-  margin-bottom: 3rem;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 60vh; /* Фиксированная высота для hero */
 }
 
 .home-page .hero h1 {
@@ -18,15 +24,11 @@
   margin-bottom: 1rem;
 }
 
-.home-page .hero p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-}
-
 .cta-buttons {
   display: flex;
   gap: 1rem;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .btn-primary, .btn-secondary {
@@ -35,67 +37,158 @@
   text-decoration: none;
   font-weight: bold;
   transition: transform 0.3s, box-shadow 0.3s;
+  display: inline-block;
 }
 
 .btn-primary {
-  background: #3498db;
+  background: #6d9ebf;
   color: white;
 }
 
 .btn-secondary {
-  background: #2ecc71;
+  background: #e2bc28;
   color: white;
 }
 
 .btn-primary:hover, .btn-secondary:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  background: #f3d458;
 }
 
-.features {
-  padding: 2rem 0;
+/* Popular Rates Section */
+.popular-rates {
+  padding: 4rem 0;
+  background-color: #f8f9fa;
+  flex-shrink: 0; /* Не сжимается */
 }
 
-.features h2 {
+.popular-rates .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.popular-rates h2 {
   text-align: center;
-  margin-bottom: 2rem;
+  font-size: 2rem;
   color: #2c3e50;
+  margin-bottom: 0.5rem;
 }
 
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.feature-card {
-  padding: 2rem;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+.rates-subtitle {
   text-align: center;
-  transition: transform 0.3s;
+  color: #7f8c8d;
+  margin-bottom: 3rem;
+  font-size: 1.1rem;
 }
 
-.feature-card:hover {
+.rates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.rate-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.rate-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
 
-.feature-card h3 {
-  color: #3498db;
+.rate-header {
   margin-bottom: 1rem;
 }
 
-.feature-card p {
-  color: #666;
-  line-height: 1.6;
+.currency-code {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #3498db;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.currency-name {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+.rate-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin: 0.5rem 0;
+}
+
+.rate-base {
+  font-size: 0.85rem;
+  color: #95a5a6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rates-note {
+  text-align: center;
+  color: #95a5a6;
+  font-size: 0.85rem;
+  margin-top: 2rem;
+}
+
+.rates-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem;
+}
+
+.loading-spinner-small {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.rates-error {
+  text-align: center;
+  color: #e74c3c;
+  padding: 2rem;
+  background: #fdf0ed;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Стили для других страниц */
+.page-container {
+  flex: 1 0 auto;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Profile Page */
 .profile-page {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 2rem auto;
   padding: 2rem;
+  width: 100%;
 }
 
 .profile-card {
@@ -116,7 +209,7 @@
 }
 
 .btn-logout {
-  background: #e74c3c;
+  background: #5a8bb0;
   color: white;
   border: none;
   padding: 0.8rem 2rem;
@@ -128,7 +221,7 @@
 }
 
 .btn-logout:hover {
-  background: #c0392b;
+  background: #5a8bb0;
 }
 
 /* Loading Spinner */
@@ -150,7 +243,73 @@
   margin-bottom: 1rem;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Медиа-запросы для мобильных устройств */
+@media (max-width: 768px) {
+  .home-page .hero {
+    min-height: 50vh;
+    padding: 2rem 1rem;
+  }
+
+  .home-page .hero h1 {
+    font-size: 2rem;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+
+  .popular-rates {
+    padding: 2rem 0;
+  }
+
+  .popular-rates h2 {
+    font-size: 1.5rem;
+  }
+
+  .rates-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .rate-card {
+    padding: 1rem;
+  }
+
+  .currency-code {
+    font-size: 1.2rem;
+  }
+
+  .rate-value {
+    font-size: 1.5rem;
+  }
+
+  .profile-page {
+    padding: 1rem;
+  }
+
+
+/* Добавьте в Pages.css */
+.rates-error.info-message {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border-left: 4px solid #2196f3;
 }
+
+.rates-note {
+  text-align: center;
+  color: #95a5a6;
+  font-size: 0.85rem;
+  margin-top: 2rem;
+  font-style: italic;
+}
+
+
+}
+
