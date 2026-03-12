@@ -14,14 +14,7 @@ router = APIRouter(prefix="/auth", tags=["authentication"])
 
 
 def validate_username(username: str) -> tuple[bool, str]:
-    """
-    Валидация имени пользователя.
 
-    Правила:
-    - Минимум 6 символов
-    - Только буквы, цифры, нижнее подчеркивание и дефис
-    - Не пустая строка и не состоит только из пробелов
-    """
     # Проверка на пустую строку или только пробелы
     if not username or username.strip() == "":
         return False, "Username cannot be empty or consist only of spaces"

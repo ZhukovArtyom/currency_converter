@@ -13,24 +13,42 @@ const Header = () => {
   };
 
   return (
-    <header className="header">
-      <div className="container">
-        <div className="logo">
-          <Link to="/">Currency Converter</Link>
+    <header className='header'>
+      <div className='container'>
+        <div className='logo'>
+          <Link to='/'>Currency Converter</Link>
         </div>
-        <nav className="nav">
-          <ul className="nav-links">
-            <li><Link to="/">Главная</Link></li>
+        <nav className='nav'>
+          <ul className='nav-links'>
+            <li>
+              <Link to='/'>Главная</Link>
+            </li>
             {isAuthenticated ? (
               <>
-                <li><Link to="/converter">Конвертер</Link></li>
-                <li><Link to="/profile">Профиль</Link></li>
-                <li><button onClick={handleLogout} className="btn-logout">Выйти</button></li>
+                <li>
+                  <Link to='/converter'>Конвертер</Link>
+                </li>
+                <li>
+                  <Link to='/profile'>Профиль</Link>
+                </li>
+                <li>
+                  <button onClick={handleLogout} className='btn-logout'>
+                    Выйти
+                  </button>
+                </li>
               </>
             ) : (
               <>
-                <li><Link to="/login" className="btn-login">Вход</Link></li>
-                <li><Link to="/register" className="btn-register">Регистрация</Link></li>
+                <li>
+                  <Link to='/login' className='btn-login'>
+                    Вход
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/register' className='btn-register'>
+                    Регистрация
+                  </Link>
+                </li>
               </>
             )}
           </ul>

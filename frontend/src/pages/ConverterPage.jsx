@@ -3,7 +3,7 @@ import CurrencyConverter from '../components/CurrencyConverter';
 
 const ConverterPage = () => {
   return (
-    <div className="page-container">
+    <div className='page-container'>
       <CurrencyConverter />
     </div>
   );

@@ -38,50 +38,46 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="auth-form-container">
+    <div className='auth-form-container'>
       <h2>Вход в систему</h2>
-      {error && <div className="error-message">{error}</div>}
+      {error && <div className='error-message'>{error}</div>}
 
-      <form onSubmit={handleSubmit} className="auth-form">
-        <div className="form-group">
-          <label htmlFor="username">Имя пользователя:</label>
+      <form onSubmit={handleSubmit} className='auth-form'>
+        <div className='form-group'>
+          <label htmlFor='username'>Имя пользователя:</label>
           <input
-            type="text"
-            id="username"
-            name="username"
+            type='text'
+            id='username'
+            name='username'
             value={formData.username}
             onChange={handleChange}
             required
-            minLength="6"
-            placeholder="Введите имя пользователя"
+            minLength='6'
+            placeholder='Введите имя пользователя'
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="password">Пароль:</label>
+        <div className='form-group'>
+          <label htmlFor='password'>Пароль:</label>
           <input
-            type="password"
-            id="password"
-            name="password"
+            type='password'
+            id='password'
+            name='password'
             value={formData.password}
             onChange={handleChange}
             required
-            minLength="8"
-            placeholder="Введите пароль"
+            minLength='8'
+            placeholder='Введите пароль'
           />
         </div>
 
-        <button
-          type="submit"
-          className="btn-submit"
-          disabled={loading}
-        >
+        <button type='submit' className='btn-submit' disabled={loading}>
           {loading ? 'Вход...' : 'Войти'}
         </button>
       </form>
 
-      <p className="auth-link">
-        Нет аккаунта? <a href="/register">Зарегистрироваться</a>
+      <p className='auth-link'>
+        Нет аккаунта? <a href='/register'>Зарегистрироваться</a>
       </p>
     </div>
   );

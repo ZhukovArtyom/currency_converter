@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       return {
         success: false,
-        error: error.response?.data?.detail || 'Login failed'
+        error: error.response?.data?.detail || 'Login failed',
       };
     }
   };
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       return {
         success: false,
-        error: error.response?.data?.detail || 'Registration failed'
+        error: error.response?.data?.detail || 'Registration failed',
       };
     }
   };

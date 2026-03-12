@@ -24,17 +24,19 @@ const ProfilePage = () => {
     fetchUserInfo();
   }, []);
 
-  if (loading) return <div className="loading">Загрузка...</div>;
+  if (loading) return <div className='loading'>Загрузка...</div>;
 
   return (
-    <div className="profile-page">
+    <div className='profile-page'>
       <h2>Личный кабинет</h2>
 
-      <div className="profile-card">
-        <h3>Информация о пользователе</h3>
-        <p><strong>Имя пользователя:</strong> {userInfo?.username || 'Неизвестно'}</p>
+      <div className='profile-card'>
+{/*         <h3>Информация о пользователе</h3> */}
+{/*         <p> */}
+{/*           <strong>Имя пользователя:</strong> {userInfo?.username || 'Неизвестно'} */}
+{/*         </p> */}
 
-        <button onClick={logout} className="btn-logout">
+        <button onClick={logout} className='btn-logout'>
           Выйти из системы
         </button>
       </div>

@@ -6,10 +6,10 @@ const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    return <div className="loading">Загрузка...</div>;
+    return <div className='loading'>Загрузка...</div>;
   }
 
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  return isAuthenticated ? children : <Navigate to='/login' />;
 };
 
 export default ProtectedRoute;

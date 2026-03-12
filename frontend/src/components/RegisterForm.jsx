@@ -75,65 +75,61 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="auth-form-container">
+    <div className='auth-form-container'>
       <h2>Регистрация</h2>
 
-      {errors.form && <div className="error-message">{errors.form}</div>}
+      {errors.form && <div className='error-message'>{errors.form}</div>}
 
-      <form onSubmit={handleSubmit} className="auth-form">
-        <div className="form-group">
-          <label htmlFor="username">Имя пользователя:</label>
+      <form onSubmit={handleSubmit} className='auth-form'>
+        <div className='form-group'>
+          <label htmlFor='username'>Имя пользователя:</label>
           <input
-            type="text"
-            id="username"
-            name="username"
+            type='text'
+            id='username'
+            name='username'
             value={formData.username}
             onChange={handleChange}
             required
-            placeholder="От 6 символов (буквы, цифры, _ и -)"
+            placeholder='От 6 символов (буквы, цифры, _ и -)'
           />
-          {errors.username && <span className="field-error">{errors.username}</span>}
+          {errors.username && <span className='field-error'>{errors.username}</span>}
         </div>
 
-        <div className="form-group">
-          <label htmlFor="password">Пароль:</label>
+        <div className='form-group'>
+          <label htmlFor='password'>Пароль:</label>
           <input
-            type="password"
-            id="password"
-            name="password"
+            type='password'
+            id='password'
+            name='password'
             value={formData.password}
             onChange={handleChange}
             required
-            placeholder="Минимум 8 символов, буквы и цифры"
+            placeholder='Минимум 8 символов, буквы и цифры'
           />
-          {errors.password && <span className="field-error">{errors.password}</span>}
+          {errors.password && <span className='field-error'>{errors.password}</span>}
         </div>
 
-        <div className="form-group">
-          <label htmlFor="confirmPassword">Подтверждение пароля:</label>
+        <div className='form-group'>
+          <label htmlFor='confirmPassword'>Подтверждение пароля:</label>
           <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
+            type='password'
+            id='confirmPassword'
+            name='confirmPassword'
             value={formData.confirmPassword}
             onChange={handleChange}
             required
-            placeholder="Повторите пароль"
+            placeholder='Повторите пароль'
           />
-          {errors.confirmPassword && <span className="field-error">{errors.confirmPassword}</span>}
+          {errors.confirmPassword && <span className='field-error'>{errors.confirmPassword}</span>}
         </div>
 
-        <button
-          type="submit"
-          className="btn-submit"
-          disabled={loading}
-        >
+        <button type='submit' className='btn-submit' disabled={loading}>
           {loading ? 'Регистрация...' : 'Зарегистрироваться'}
         </button>
       </form>
 
-      <p className="auth-link">
-        Уже есть аккаунт? <a href="/login">Войти</a>
+      <p className='auth-link'>
+        Уже есть аккаунт? <a href='/login'>Войти</a>
       </p>
     </div>
   );

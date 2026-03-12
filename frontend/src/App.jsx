@@ -15,15 +15,15 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <div className="App">
+        <div className='App'>
           <Header />
-          <main className="main-content">
+          <main className='main-content'>
             <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
+              <Route path='/' element={<HomePage />} />
+              <Route path='/login' element={<LoginPage />} />
+              <Route path='/register' element={<RegisterPage />} />
               <Route
-                path="/converter"
+                path='/converter'
                 element={
                   <ProtectedRoute>
                     <ConverterPage />
@@ -31,7 +31,7 @@ function App() {
                 }
               />
               <Route
-                path="/profile"
+                path='/profile'
                 element={
                   <ProtectedRoute>
                     <ProfilePage />

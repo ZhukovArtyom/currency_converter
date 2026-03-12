@@ -34,8 +34,7 @@ api.interceptors.response.use(
 );
 
 // Аутентификация
-export const register = (username, password) =>
-  api.post('/auth/register/', { username, password });
+export const register = (username, password) => api.post('/auth/register/', { username, password });
 
 export const login = (username, password) => {
   const formData = new URLSearchParams();
@@ -43,14 +42,13 @@ export const login = (username, password) => {
   formData.append('password', password);
 
   return api.post('/auth/login/', formData, {
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
   });
 };
 
 // Валюты
 export const getCurrencies = () => api.get('/currency/list/');
-export const getExchangeRates = (base = 'USD') =>
-  api.get(`/currency/exchange/?base=${base}`);
+export const getExchangeRates = (base = 'USD') => api.get(`/currency/exchange/?base=${base}`);
 export const convertCurrency = (fromCurrency, toCurrency, amount) =>
   api.post('/currency/convert/', { from_currency: fromCurrency, to_currency: toCurrency, amount });
 
