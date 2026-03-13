@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { getCurrencies, convertCurrency, getExchangeRates } from '../services/api';
+import { getCurrencies, convertCurrency } from '../services/api';
 import './CurrencyConverter.css';
 
 const CurrencyConverter = () => {
   const [currencies, setCurrencies] = useState([]);
   const [fromCurrency, setFromCurrency] = useState('USD');
-  const [toCurrency, setToCurrency] = useState('EUR');
+  const [toCurrency, setToCurrency] = useState('RUB');
   const [amount, setAmount] = useState(1);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Состояния для блока с курсами
-  const [rates, setRates] = useState({});
+  // Состояния для популярных курсов
+  const [popularRates, setPopularRates] = useState({});
   const [ratesLoading, setRatesLoading] = useState(true);
   const [ratesError, setRatesError] = useState('');
 
-  // Популярные валюты для отображения
   const popularCurrencies = ['USD', 'EUR', 'GBP', 'JPY', 'CNY'];
 
   useEffect(() => {
     loadCurrencies();
-    loadRatesToRUB();
+    loadAllPopularRates();
   }, []);
 
   const loadCurrencies = async () => {
@@ -33,62 +32,39 @@ const CurrencyConverter = () => {
     }
   };
 
-  const loadRatesToRUB = async () => {
+  // Загружаем курсы для всех популярных валют, используя ТОТ ЖЕ МЕТОД convertCurrency
+  const loadAllPopularRates = async () => {
+    setRatesLoading(true);
+    const rates = {};
+
     try {
-      setRatesLoading(true);
-
-      // Получаем курсы относительно USD через ваш бэкенд
-      const response = await getExchangeRates('USD');
-      const data = response.data;
-
-      console.log('API Response (USD base):', data);
-
-      if (data && data.rates) {
-        const allRates = data.rates;
-        const usdToRub = allRates['RUB']; // Сколько рублей в 1 долларе
-
-        console.log('USD to RUB:', usdToRub);
-
-        if (usdToRub) {
-          const rubRates = {};
-
-          popularCurrencies.forEach((currency) => {
-            if (currency === 'USD') {
-              // 1 USD = usdToRub RUB
-              rubRates['USD'] = usdToRub;
-            } else {
-              const rateFromApi = allRates[currency]; // Сколько единиц валюты в 1 USD
-              if (rateFromApi) {
-                // Правильная формула:
-                // 1 USD = rateFromApi currency
-                // Значит: 1 currency = 1/rateFromApi USD
-                // А 1 USD = usdToRub RUB
-                // Поэтому: 1 currency = (1/rateFromApi) * usdToRub RUB
-                rubRates[currency] = (1 / rateFromApi) * usdToRub;
-              }
-            }
-          });
-
-          console.log('Final RUB rates:', rubRates);
-          setRates(rubRates);
-          setRatesError('');
-        } else {
-          throw new Error('Курс RUB не найден');
+      // Загружаем курсы параллельно для всех валют
+      const promises = popularCurrencies.map(async (currency) => {
+        try {
+          // Используем ТОТ ЖЕ САМЫЙ метод конвертации, что и для обычной конвертации
+          const response = await convertCurrency(currency, 'RUB', 1);
+          rates[currency] = response.data.rate;
+          console.log(`✅ Курс для ${currency}: ${response.data.rate} RUB`);
+        } catch (err) {
+          console.error(`Ошибка загрузки курса для ${currency}:`, err);
+          rates[currency] = null;
         }
-      } else {
-        throw new Error('Неверный формат ответа');
-      }
+      });
+
+      await Promise.all(promises);
+      setPopularRates(rates);
+      setRatesError('');
     } catch (err) {
-      console.error('Error loading rates:', err);
+      console.error('Error loading popular rates:', err);
       setRatesError('Не удалось загрузить курсы валют');
 
-      // Запасной вариант с примерными курсами на случай ошибки
-      setRates({
-        USD: 92.5,
-        EUR: 100.2,
-        GBP: 117.8,
-        JPY: 0.62,
-        CNY: 12.85,
+      // Запасной вариант на случай ошибки
+      setPopularRates({
+        USD: 79.35,
+        EUR: 91.63,
+        GBP: 106.15,
+        JPY: 0.50,
+        CNY: 10.98,
       });
     } finally {
       setRatesLoading(false);
@@ -104,6 +80,14 @@ const CurrencyConverter = () => {
     try {
       const response = await convertCurrency(fromCurrency, toCurrency, amount);
       setResult(response.data);
+
+      // Если конвертировали в RUB, обновляем курс в популярных
+      if (toCurrency === 'RUB' && popularCurrencies.includes(fromCurrency)) {
+        setPopularRates(prev => ({
+          ...prev,
+          [fromCurrency]: response.data.rate
+        }));
+      }
     } catch (err) {
       setError(err.response?.data?.detail || 'Ошибка конвертации');
     } finally {
@@ -111,9 +95,20 @@ const CurrencyConverter = () => {
     }
   };
 
-  const handleSwapCurrencies = () => {
-    setFromCurrency(toCurrency);
-    setToCurrency(fromCurrency);
+  const handleRateCardClick = async (currency) => {
+    setFromCurrency(currency);
+    setToCurrency('RUB');
+
+    // Опционально: сразу выполняем конвертацию
+    // Можно раскомментировать, если хотите, чтобы результат появлялся сразу
+    // setAmount(1);
+    // setTimeout(() => {
+    //   document.querySelector('form').requestSubmit();
+    // }, 100);
+  };
+
+  const handleRefreshRates = () => {
+    loadAllPopularRates();
   };
 
   const getCurrencyName = (currency) => {
@@ -123,22 +118,18 @@ const CurrencyConverter = () => {
       GBP: 'Фунт стерлингов',
       JPY: 'Японская иена',
       CNY: 'Китайский юань',
+      RUB: 'Российский рубль',
     };
     return names[currency] || currency;
-  };
-
-  const formatRate = (rate) => {
-    if (!rate) return '—';
-    if (rate < 0.1) {
-      return rate.toFixed(4);
-    }
-    return rate.toFixed(2);
   };
 
   return (
     <div className='converter-page'>
       <div className='converter-container'>
-        <h2>Конвертер валют</h2>
+        <div className='converter-header'>
+          <h2>Конвертер валют</h2>
+
+        </div>
 
         <form onSubmit={handleConvert} className='converter-form'>
           <div className='form-row'>
@@ -150,7 +141,7 @@ const CurrencyConverter = () => {
                 className='currency-select'
               >
                 {currencies.map((currency) => (
-                  <option key={currency} value={currency}>
+                  <option key={`from-${currency}`} value={currency}>
                     {currency}
                   </option>
                 ))}
@@ -159,7 +150,10 @@ const CurrencyConverter = () => {
 
             <button
               type='button'
-              onClick={handleSwapCurrencies}
+              onClick={() => {
+                setFromCurrency(toCurrency);
+                setToCurrency(fromCurrency);
+              }}
               className='swap-button'
               title='Поменять валюты местами'
             >
@@ -174,7 +168,7 @@ const CurrencyConverter = () => {
                 className='currency-select'
               >
                 {currencies.map((currency) => (
-                  <option key={currency} value={currency}>
+                  <option key={`to-${currency}`} value={currency}>
                     {currency}
                   </option>
                 ))}
@@ -215,44 +209,71 @@ const CurrencyConverter = () => {
               </span>
             </div>
             <div className='conversion-rate'>
-              1 {result.from} = {result.rate} {result.to}
+              1 {result.from} = {result.rate.toFixed(2)} {result.to}
             </div>
           </div>
         )}
       </div>
 
-      {/* Блок с популярными курсами */}
+      {/* Блок с популярными курсами - теперь использует ТОТ ЖЕ МЕТОД */}
       <section className='popular-rates'>
         <div className='container'>
-          <h3>Популярные курсы</h3>
+          <div className='rates-header'>
+            <h3>Популярные курсы к рублю</h3>
+            {ratesLoading && (
+              <div className='rates-loading-small'>
+                <div className='loading-spinner-small'></div>
+                <span>Обновление...</span>
+              </div>
+            )}
+          </div>
 
-          {ratesLoading && (
-            <div className='rates-loading'>
-              <div className='loading-spinner-small'></div>
-              <span>Загрузка актуальных курсов...</span>
-            </div>
-          )}
+
 
           {ratesError && <div className='rates-error'>{ratesError}</div>}
 
-          {!ratesLoading && !ratesError && (
-            <div className='rates-grid'>
-              {popularCurrencies.map((currency) => {
-                const rate = rates[currency];
-                return (
-                  <div key={currency} className='rate-card'>
-                    <div className='rate-header'>
-                      <span className='currency-code'>{currency}</span>
-                      <span className='currency-name'>{getCurrencyName(currency)}</span>
-                    </div>
-                    <div className='rate-value'>{rate ? formatRate(rate) : '—'} ₽</div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+          <div className='rates-grid'>
+            {popularCurrencies.map((currency) => {
+              const rate = popularRates[currency];
+              const isLoading = ratesLoading && !rate;
 
-          <div className='rates-note'>* Курсы обновляются в реальном времени</div>
+              return (
+                <div
+                  key={`popular-${currency}`}
+                  className={`rate-card ${fromCurrency === currency && toCurrency === 'RUB' ? 'active' : ''} ${isLoading ? 'loading' : ''}`}
+                  onClick={() => !isLoading && handleRateCardClick(currency)}
+                  role='button'
+                  tabIndex={0}
+                  onKeyPress={(e) => {
+                    if ((e.key === 'Enter' || e.key === ' ') && !isLoading) {
+                      handleRateCardClick(currency);
+                    }
+                  }}
+                  title={`Конвертировать ${currency} в рубли`}
+                >
+                  <div className='rate-header'>
+                    <span className='currency-code'>{currency}</span>
+                    <span className='currency-name'>{getCurrencyName(currency)}</span>
+                  </div>
+                  <div className='rate-value'>
+                    {isLoading ? (
+                      <div className='rate-loading'>...</div>
+                    ) : (
+                      <>
+                        <span className='rate-number'>{rate ? rate.toFixed(2) : '—'}  ₽</span>
+
+                      </>
+                    )}
+                  </div>
+                  <div className='rate-hint'>
+                    {isLoading ? 'Загрузка...' : ''}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+
         </div>
       </section>
     </div>
