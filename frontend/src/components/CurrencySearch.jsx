@@ -29,6 +29,7 @@ const CurrencySearch = ({
     }
   }, [currencies]);
 
+  // ===== ИЗМЕНЕНИЕ ЗДЕСЬ =====
   // Фильтрация валют при изменении поискового запроса
   useEffect(() => {
     if (!currencies || currencies.length === 0) {
@@ -43,13 +44,18 @@ const CurrencySearch = ({
       setFilteredCurrencies(uniqueCurrencies);
     } else {
       const searchLower = searchTerm.toLowerCase();
-      const filtered = uniqueCurrencies.filter(currency =>
-        currency.toLowerCase().includes(searchLower)
-      );
+      const filtered = uniqueCurrencies.filter(currency => {
+        // Получаем название валюты
+        const fullName = getCurrencyFullName(currency).toLowerCase();
+        // Ищем совпадение ИЛИ в коде, ИЛИ в названии
+        return currency.toLowerCase().includes(searchLower) ||
+               fullName.includes(searchLower);
+      });
       setFilteredCurrencies(filtered);
     }
     setHighlightedIndex(-1);
   }, [searchTerm, currencies]);
+  // ===== КОНЕЦ ИЗМЕНЕНИЯ =====
 
   // Закрытие выпадающего списка при клике вне компонента
   useEffect(() => {
@@ -349,7 +355,7 @@ const CurrencySearch = ({
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Поиск валюты..."
+                placeholder="Поиск по коду или названию..."
                 autoComplete="off"
               />
               {searchTerm && (

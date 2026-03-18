@@ -208,9 +208,7 @@ const CurrencyConverter = () => {
             )}
           </div>
 
-          <p className='rates-subtitle'>
-            Кликните на валюту для быстрой конвертации
-          </p>
+
 
           {ratesError && <div className='rates-error'>{ratesError}</div>}
 
@@ -242,22 +240,20 @@ const CurrencyConverter = () => {
                       <div className='rate-loading'>...</div>
                     ) : (
                       <>
-                        <span className='rate-number'>{rate ? rate.toFixed(2) : '—'}</span>
-                        <span className='rate-currency'> ₽</span>
+                        <span className='rate-number'>{rate ? rate.toFixed(2) : '—'} ₽</span>
+
                       </>
                     )}
                   </div>
                   <div className='rate-hint'>
-                    {isLoading ? 'Загрузка...' : 'Кликните для конвертации'}
+                    {isLoading ? 'Загрузка...' : ''}
                   </div>
                 </div>
               );
             })}
           </div>
 
-          <div className='rates-note'>
-            * Курсы обновляются в реальном времени
-          </div>
+
         </div>
       </section>
     </div>
