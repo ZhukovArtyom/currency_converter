@@ -326,12 +326,14 @@ const CurrencySearch = ({
           className={`currency-select-button ${isOpen ? 'open' : ''}`}
           onClick={toggleDropdown}
         >
-          <span className="selected-value">
-            {value || placeholder}
-          </span>
+          <div className="selected-value-wrapper">
+            <span className="selected-code">{value || placeholder}</span>
+            {value && (
+              <span className="selected-name">{getCurrencyFullName(value)}</span>
+            )}
+          </div>
           <div className="button-icons">
             <span className="arrow-icon">▼</span>
-
           </div>
         </button>
 

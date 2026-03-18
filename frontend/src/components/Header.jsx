@@ -4,12 +4,21 @@ import { useAuth } from '../context/AuthContext';
 import './Header.css';
 
 const Header = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
     navigate('/');
+  };
+
+  // Функция для получения инициалов пользователя
+  const getUserInitials = () => {
+    if (user?.username) {
+      // Берем первую букву имени и делаем ее заглавной
+      return user.username.charAt(0).toUpperCase();
+    }
+    return '?';
   };
 
   return (
@@ -28,13 +37,15 @@ const Header = () => {
                 <li>
                   <Link to='/converter'>Конвертер</Link>
                 </li>
-                <li>
-                  <Link to='/profile'>Профиль</Link>
-                </li>
-                <li>
-                  <button onClick={handleLogout} className='btn-logout'>
-                    Выйти
-                  </button>
+                <li className='profile-menu-item'>
+                  <Link to='/profile' className='profile-link'>
+                    <div className='profile-avatar-container'>
+                      <div className='profile-initials-avatar'>
+                        {getUserInitials()}
+                      </div>
+                      <span className='profile-username'>{user?.username || 'User'}</span>
+                    </div>
+                  </Link>
                 </li>
               </>
             ) : (

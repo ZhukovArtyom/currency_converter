@@ -12,9 +12,27 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      // Здесь можно получить информацию о пользователе
-      // Например: api.get('/auth/me/').then(response => setUser(response.data))
-      setLoading(false);
+      // Здесь можно получить информацию о пользователе с бэкенда
+      // Например, через эндпоинт /auth/me/
+      const fetchUser = async () => {
+        try {
+          // Раскомментируйте, когда добавите эндпоинт /auth/me/
+          // const response = await api.get('/auth/me/');
+          // setUser(response.data);
+
+          // Пока используем заглушку
+          setUser({
+            username: localStorage.getItem('username') || 'User',
+            avatarUrl: null // Здесь можно добавить URL аватара
+          });
+        } catch (error) {
+          console.error('Error fetching user:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchUser();
     } else {
       setLoading(false);
     }
@@ -25,12 +43,14 @@ export const AuthProvider = ({ children }) => {
       const response = await apiLogin(username, password);
       const { access_token } = response.data;
       localStorage.setItem('access_token', access_token);
+      localStorage.setItem('username', username); // Сохраняем username
       setToken(access_token);
+      setUser({ username, avatarUrl: null });
       return { success: true };
     } catch (error) {
       return {
         success: false,
-        error: error.response?.data?.detail || 'Login failed',
+        error: error.response?.data?.detail || 'Login failed'
       };
     }
   };
@@ -42,13 +62,14 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       return {
         success: false,
-        error: error.response?.data?.detail || 'Registration failed',
+        error: error.response?.data?.detail || 'Registration failed'
       };
     }
   };
 
   const logout = () => {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('username');
     setToken(null);
     setUser(null);
   };

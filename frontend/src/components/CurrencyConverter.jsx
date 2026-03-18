@@ -7,7 +7,7 @@ const CurrencyConverter = () => {
   const [currencies, setCurrencies] = useState([]);
   const [fromCurrency, setFromCurrency] = useState('USD');
   const [toCurrency, setToCurrency] = useState('RUB');
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState(''); // Изменено: пустая строка вместо 1
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -24,18 +24,18 @@ const CurrencyConverter = () => {
   }, []);
 
   const loadCurrencies = async () => {
-  try {
-    const response = await getCurrencies();
-    // Убираем дубликаты с помощью Set
-    const uniqueCurrencies = [...new Set(response.data.supported_currencies || [])];
-    // Сортируем для удобства
-    uniqueCurrencies.sort();
-    setCurrencies(uniqueCurrencies);
-    console.log('Уникальные валюты:', uniqueCurrencies.length);
-  } catch (err) {
-    console.error('Error loading currencies:', err);
-  }
-};
+    try {
+      const response = await getCurrencies();
+      // Убираем дубликаты с помощью Set
+      const uniqueCurrencies = [...new Set(response.data.supported_currencies || [])];
+      // Сортируем для удобства
+      uniqueCurrencies.sort();
+      setCurrencies(uniqueCurrencies);
+      console.log('Уникальные валюты:', uniqueCurrencies.length);
+    } catch (err) {
+      console.error('Error loading currencies:', err);
+    }
+  };
 
   const loadAllPopularRates = async () => {
     setRatesLoading(true);
@@ -65,12 +65,19 @@ const CurrencyConverter = () => {
 
   const handleConvert = async (e) => {
     e.preventDefault();
+
+    // Добавлена проверка на пустое значение
+    if (!amount) {
+      setError('Введите сумму для конвертации');
+      return;
+    }
+
     setLoading(true);
     setError('');
     setResult(null);
 
     try {
-      const response = await convertCurrency(fromCurrency, toCurrency, amount);
+      const response = await convertCurrency(fromCurrency, toCurrency, parseFloat(amount));
       setResult(response.data);
 
       if (toCurrency === 'RUB' && popularCurrencies.includes(fromCurrency)) {
@@ -113,13 +120,7 @@ const CurrencyConverter = () => {
       <div className='converter-container'>
         <div className='converter-header'>
           <h2>Конвертер валют</h2>
-          <button
-            onClick={loadAllPopularRates}
-            className='refresh-button'
-            title='Обновить курсы'
-          >
-            🔄 Обновить курсы
-          </button>
+
         </div>
 
         <form onSubmit={handleConvert} className='converter-form'>
@@ -159,11 +160,12 @@ const CurrencyConverter = () => {
             <input
               type='number'
               value={amount}
-              onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
+              onChange={(e) => setAmount(e.target.value)} // Убрано parseFloat, так как нам нужна пустая строка
               min='0.01'
               step='any'
               required
-              className='amount-input'
+              className='amount-input no-spinners' // Добавлен класс no-spinners
+              placeholder='Введите сумму' // Добавлен placeholder для подсказки
             />
           </div>
 

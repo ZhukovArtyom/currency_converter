@@ -251,3 +251,55 @@
     font-size: 0.7rem;
   }
 }
+  /* ===== НОВЫЕ СТИЛИ ДЛЯ ОТОБРАЖЕНИЯ НАЗВАНИЯ ВАЛЮТЫ В КНОПКЕ ===== */
+
+/* Контейнер для кода и названия валюты */
+.selected-value-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.3;
+  flex: 1;
+}
+
+/* Код валюты (например, USD) */
+.selected-code {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+/* Название валюты (например, Доллар США) */
+.selected-name {
+  font-size: 0.75rem;
+  color: #7f8c8d;
+  font-weight: normal;
+  margin-top: 2px;
+}
+
+/* Обновляем существующий класс selected-value,
+   но оставляем его на случай, если он где-то используется */
+.selected-value {
+  font-weight: 500;
+}
+
+/* Делаем кнопку выше, чтобы поместились две строки */
+.currency-select-button {
+  min-height: 54px; /* Добавляем минимальную высоту */
+  align-items: center;
+}
+
+/* Для мобильных устройств */
+@media (max-width: 600px) {
+  .currency-select-button {
+    min-height: 48px;
+  }
+
+  .selected-code {
+    font-size: 0.9rem;
+  }
+
+  .selected-name {
+    font-size: 0.7rem;
+  }
+}
