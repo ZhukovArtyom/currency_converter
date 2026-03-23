@@ -355,7 +355,7 @@ const CurrencySearch = ({
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Поиск по коду или названию..."
+                placeholder="Поиск"
                 autoComplete="off"
               />
               {searchTerm && (
@@ -390,10 +390,7 @@ const CurrencySearch = ({
               )}
             </div>
 
-            {/* Подсказка по клавишам */}
-            <div className="dropdown-hint">
-              ↑↓ для навигации • Enter для выбора • Esc для закрытия
-            </div>
+
           </div>
         )}
       </div>
