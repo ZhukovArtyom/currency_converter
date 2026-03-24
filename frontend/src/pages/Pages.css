@@ -1,8 +1,8 @@
-/* Home Page */
+
 .home-page {
   display: flex;
   flex-direction: column;
-  min-height: 100%; /* Занимает всю высоту main-content */
+  min-height: 100%;
 }
 
 .home-page .hero {
@@ -16,7 +16,7 @@
   color: white;
   width: 100%;
   box-sizing: border-box;
-  min-height: 60vh; /* Фиксированная высота для hero */
+  min-height: 60vh;
 }
 
 .home-page .hero h1 {
@@ -59,12 +59,10 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   background: #f3d458;
 }
-
-/* Popular Rates Section */
 .popular-rates {
   padding: 4rem 0;
   background-color: #f8f9fa;
-  flex-shrink: 0; /* Не сжимается */
+  flex-shrink: 0;
 }
 
 .popular-rates .container {
@@ -182,8 +180,6 @@
     transform: rotate(360deg);
   }
 }
-
-/* Стили для других страниц */
 .page-container {
   flex: 1 0 auto;
   padding: 2rem;
@@ -192,8 +188,6 @@
   width: 100%;
   box-sizing: border-box;
 }
-
-/* Profile Page */
 .profile-page {
   max-width: 800px;
   margin: 2rem auto;
@@ -233,8 +227,6 @@
 .btn-logout:hover {
   background: #5a8bb0;
 }
-
-/* Loading Spinner */
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -252,8 +244,6 @@
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
 }
-
-/* Медиа-запросы для мобильных устройств */
 @media (max-width: 768px) {
   .home-page .hero {
     min-height: 50vh;
@@ -304,8 +294,6 @@
   .profile-page {
     padding: 1rem;
   }
-
-  /* Добавьте в Pages.css */
   .rates-error.info-message {
     background-color: #e3f2fd;
     color: #1976d2;

@@ -24,15 +24,11 @@ const RegisterForm = () => {
 
   const validateForm = () => {
     const newErrors = {};
-
-    // Валидация username (минимум 6 символов, только буквы, цифры, _ и -)
     if (formData.username.length < 6) {
       newErrors.username = 'Имя должно содержать минимум 6 символов';
     } else if (!/^[a-zA-Z0-9_-]+$/.test(formData.username)) {
       newErrors.username = 'Имя может содержать только буквы, цифры, _ и -';
     }
-
-    // Валидация пароля
     if (formData.password.length < 8) {
       newErrors.password = 'Пароль должен содержать минимум 8 символов';
     } else if (!/[a-zA-Z]/.test(formData.password)) {
@@ -40,8 +36,6 @@ const RegisterForm = () => {
     } else if (!/[0-9]/.test(formData.password)) {
       newErrors.password = 'Пароль должен содержать хотя бы одну цифру';
     }
-
-    // Проверка совпадения паролей
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Пароли не совпадают';
     }
@@ -64,7 +58,6 @@ const RegisterForm = () => {
     const result = await register(formData.username, formData.password);
 
     if (result.success) {
-      // Автоматический вход после регистрации
       await login(formData.username, formData.password);
       navigate('/converter');
     } else {

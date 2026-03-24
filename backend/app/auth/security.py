@@ -13,11 +13,9 @@ from backend.app.models.schemas import TokenData
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
-# Свои функции хеширования без passlib
 def verify_password(plain_password: str, hashed_password: str) -> bool:
 
     try:
-        # Преобразуем строки в байты для bcrypt
         password_bytes = plain_password.encode('utf-8')
         hash_bytes = hashed_password.encode('utf-8')
         return bcrypt.checkpw(password_bytes, hash_bytes)
@@ -27,13 +25,9 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 
 def get_password_hash(password: str) -> str:
-    """Хеширование пароля"""
     try:
-        # Ограничиваем длину пароля до 72 байт (ограничение bcrypt)
         if len(password.encode('utf-8')) > 72:
             password = password[:72]
-
-        # Генерируем соль и хеш
         salt = bcrypt.gensalt()
         password_bytes = password.encode('utf-8')
         hashed = bcrypt.hashpw(password_bytes, salt)
@@ -44,7 +38,6 @@ def get_password_hash(password: str) -> str:
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
-    """Создание JWT токена"""
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
@@ -57,7 +50,6 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
 
 
 def decode_token(token: str) -> Optional[TokenData]:
-    """Декодирование JWT токена"""
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         username: str = payload.get("sub")
@@ -69,7 +61,6 @@ def decode_token(token: str) -> Optional[TokenData]:
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    """Получение текущего пользователя по токену"""
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",

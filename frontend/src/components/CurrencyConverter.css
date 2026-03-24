@@ -53,13 +53,11 @@
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
-/* Убираем стрелки у input type="number" для всех браузеров */
 .amount-input.no-spinners {
   -moz-appearance: textfield; /* Firefox */
   appearance: textfield; /* Современные браузеры */
 }
 
-/* Для Chrome, Safari, Edge, Opera */
 .amount-input.no-spinners::-webkit-outer-spin-button,
 .amount-input.no-spinners::-webkit-inner-spin-button {
   -webkit-appearance: none;

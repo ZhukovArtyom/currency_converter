@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+const API_URL = import.meta.env.VITE_API_URL || 'http:
 
 const api = axios.create({
   baseURL: API_URL,
@@ -8,8 +8,6 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
-// Перехватчик для добавления токена к запросам
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('access_token');
@@ -20,8 +18,6 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
-// Перехватчик для обработки ошибок
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -32,8 +28,6 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-// Аутентификация
 export const register = (username, password) => api.post('/auth/register/', { username, password });
 
 export const login = (username, password) => {
@@ -45,8 +39,6 @@ export const login = (username, password) => {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
   });
 };
-
-// Валюты
 export const getCurrencies = () => api.get('/currency/list/');
 export const getExchangeRates = (base = 'USD') => api.get(`/currency/exchange/?base=${base}`);
 export const convertCurrency = (fromCurrency, toCurrency, amount) =>
