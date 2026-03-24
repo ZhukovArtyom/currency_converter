@@ -17,10 +17,7 @@ const CurrencySearch = ({
   const buttonRef = useRef(null);
   const searchInputRef = useRef(null);
   const optionsRef = useRef([]);
-
-  // Убеждаемся, что currencies уникальны при монтировании
   useEffect(() => {
-    // Проверяем на дубликаты и выводим предупреждение
     const duplicates = currencies.filter((item, index) =>
       currencies.indexOf(item) !== index
     );
@@ -28,16 +25,11 @@ const CurrencySearch = ({
       console.warn('Найдены дубликаты валют:', [...new Set(duplicates)]);
     }
   }, [currencies]);
-
-  // ===== ИЗМЕНЕНИЕ ЗДЕСЬ =====
-  // Фильтрация валют при изменении поискового запроса
   useEffect(() => {
     if (!currencies || currencies.length === 0) {
       setFilteredCurrencies([]);
       return;
     }
-
-    // Сначала убираем дубликаты из исходного массива (на всякий случай)
     const uniqueCurrencies = [...new Set(currencies)];
 
     if (searchTerm.trim() === '') {
@@ -45,9 +37,7 @@ const CurrencySearch = ({
     } else {
       const searchLower = searchTerm.toLowerCase();
       const filtered = uniqueCurrencies.filter(currency => {
-        // Получаем название валюты
         const fullName = getCurrencyFullName(currency).toLowerCase();
-        // Ищем совпадение ИЛИ в коде, ИЛИ в названии
         return currency.toLowerCase().includes(searchLower) ||
                fullName.includes(searchLower);
       });
@@ -55,9 +45,6 @@ const CurrencySearch = ({
     }
     setHighlightedIndex(-1);
   }, [searchTerm, currencies]);
-  // ===== КОНЕЦ ИЗМЕНЕНИЯ =====
-
-  // Закрытие выпадающего списка при клике вне компонента
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -73,15 +60,11 @@ const CurrencySearch = ({
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  // Фокус на поле поиска при открытии
   useEffect(() => {
     if (isOpen && searchInputRef.current) {
       searchInputRef.current.focus();
     }
   }, [isOpen]);
-
-  // Сброс подсветки при изменении фильтра
   useEffect(() => {
     setHighlightedIndex(-1);
   }, [filteredCurrencies]);
@@ -127,8 +110,6 @@ const CurrencySearch = ({
         break;
     }
   };
-
-  // Скролл к выделенному элементу
   useEffect(() => {
     if (highlightedIndex >= 0 && optionsRef.current[highlightedIndex]) {
       optionsRef.current[highlightedIndex].scrollIntoView({
@@ -309,10 +290,7 @@ const CurrencySearch = ({
 };
     return names[code] || code;
   };
-
-  // Функция для получения уникального ключа (используем currency + индекс только если есть дубликаты)
   const getItemKey = (currency, index) => {
-    // Проверяем, есть ли дубликаты этого значения
     const count = currencies.filter(c => c === currency).length;
     if (count > 1) {
       return `${currency}-${index}`;
@@ -325,7 +303,7 @@ const CurrencySearch = ({
       {label && <label className="currency-search-label">{label}</label>}
 
       <div className="currency-search-wrapper">
-        {/* Кнопка для открытия/закрытия */}
+
         <button
           ref={buttonRef}
           type="button"
@@ -343,10 +321,10 @@ const CurrencySearch = ({
           </div>
         </button>
 
-        {/* Выпадающий список */}
+
         {isOpen && (
           <div ref={dropdownRef} className="currency-dropdown">
-            {/* Поле поиска */}
+            {}
             <div className="dropdown-search">
               <input
                 ref={searchInputRef}
@@ -368,7 +346,7 @@ const CurrencySearch = ({
               )}
             </div>
 
-            {/* Список валют */}
+
             <div className="dropdown-list">
               {filteredCurrencies.length > 0 ? (
                 filteredCurrencies.map((currency, index) => (

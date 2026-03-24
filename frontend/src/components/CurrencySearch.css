@@ -15,8 +15,6 @@
   position: relative;
   width: 100%;
 }
-
-/* Кнопка выбора */
 .currency-select-button {
   width: 100%;
   display: flex;
@@ -69,8 +67,6 @@
   font-size: 1rem;
   color: #7f8c8d;
 }
-
-/* Выпадающий список */
 .currency-dropdown {
   position: absolute;
   top: 100%;
@@ -98,8 +94,6 @@
     transform: translateY(0);
   }
 }
-
-/* Поле поиска в выпадающем списке */
 .dropdown-search {
   padding: 0.75rem;
   border-bottom: 1px solid #ecf0f1;
@@ -147,8 +141,6 @@
   background: #e0e0e0;
   color: #2c3e50;
 }
-
-/* Список валют */
 .dropdown-list {
   max-height: 300px;
   overflow-y: auto;
@@ -195,16 +187,12 @@
   color: #7f8c8d;
   font-size: 0.85rem;
 }
-
-/* Пустой результат */
 .dropdown-empty {
   padding: 2rem;
   text-align: center;
   color: #95a5a6;
   font-style: italic;
 }
-
-/* Подсказка */
 .dropdown-hint {
   padding: 0.5rem;
   text-align: center;
@@ -214,8 +202,6 @@
   font-size: 0.75rem;
   border-radius: 0 0 8px 8px;
 }
-
-/* Стили для скролла */
 .dropdown-list::-webkit-scrollbar {
   width: 8px;
 }
@@ -232,8 +218,6 @@
 .dropdown-list::-webkit-scrollbar-thumb:hover {
   background: #95a5a6;
 }
-
-/* Адаптивность */
 @media (max-width: 600px) {
   .currency-select-button {
     padding: 0.6rem 0.8rem;
@@ -251,9 +235,6 @@
     font-size: 0.7rem;
   }
 }
-  /* ===== НОВЫЕ СТИЛИ ДЛЯ ОТОБРАЖЕНИЯ НАЗВАНИЯ ВАЛЮТЫ В КНОПКЕ ===== */
-
-/* Контейнер для кода и названия валюты */
 .selected-value-wrapper {
   display: flex;
   flex-direction: column;
@@ -261,35 +242,25 @@
   line-height: 1.3;
   flex: 1;
 }
-
-/* Код валюты (например, USD) */
 .selected-code {
   font-weight: 600;
   font-size: 1rem;
   color: #2c3e50;
 }
-
-/* Название валюты (например, Доллар США) */
 .selected-name {
   font-size: 0.75rem;
   color: #7f8c8d;
   font-weight: normal;
   margin-top: 2px;
 }
-
-/* Обновляем существующий класс selected-value,
-   но оставляем его на случай, если он где-то используется */
+   но оставляем его на случай, если он где-то используется *
 .selected-value {
   font-weight: 500;
 }
-
-/* Делаем кнопку выше, чтобы поместились две строки */
 .currency-select-button {
-  min-height: 54px; /* Добавляем минимальную высоту */
+  min-height: 54px;
   align-items: center;
 }
-
-/* Для мобильных устройств */
 @media (max-width: 600px) {
   .currency-select-button {
     min-height: 48px;

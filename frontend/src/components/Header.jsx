@@ -12,10 +12,9 @@ const Header = () => {
     navigate('/');
   };
 
-  // Функция для получения инициалов пользователя
+
   const getUserInitials = () => {
     if (user?.username) {
-      // Берем первую букву имени и делаем ее заглавной
       return user.username.charAt(0).toUpperCase();
     }
     return '?';

@@ -9,9 +9,6 @@ def get_exchange_rates(base_currency: str = "USD"):
     """
     try:
         url = f"{settings.EXCHANGE_API_URL}{base_currency}"
-        # Добавляем API ключ если требуется
-        # headers = {"apikey": settings.EXCHANGE_API_KEY}
-        # response = requests.get(url, headers=headers)
 
         response = requests.get(url)
         response.raise_for_status()
@@ -38,7 +35,6 @@ def convert_currency(from_currency: str, to_currency: str, amount: float = 1.0):
     Конвертация валюты
     """
     try:
-        # Получаем курсы для базовой валюты
         rates_data = get_exchange_rates(from_currency)
 
         if to_currency not in rates_data.get("rates", {}):

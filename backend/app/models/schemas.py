@@ -13,9 +13,9 @@ class UserCreate(UserBase):
 
 class UserInDB(UserBase):
     id: int
-    created_at: Optional[datetime] = None  # Изменено с str на datetime
+    created_at: Optional[datetime] = None
 
-    model_config = ConfigDict(from_attributes=True)  # Важно! Позволяет работать с SQLAlchemy моделями
+    model_config = ConfigDict(from_attributes=True)
 
 
 class Token(BaseModel):

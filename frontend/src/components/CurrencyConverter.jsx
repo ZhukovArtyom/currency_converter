@@ -7,7 +7,7 @@ const CurrencyConverter = () => {
   const [currencies, setCurrencies] = useState([]);
   const [fromCurrency, setFromCurrency] = useState('USD');
   const [toCurrency, setToCurrency] = useState('RUB');
-  const [amount, setAmount] = useState(''); // Изменено: пустая строка вместо 1
+  const [amount, setAmount] = useState('');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -26,9 +26,7 @@ const CurrencyConverter = () => {
   const loadCurrencies = async () => {
     try {
       const response = await getCurrencies();
-      // Убираем дубликаты с помощью Set
       const uniqueCurrencies = [...new Set(response.data.supported_currencies || [])];
-      // Сортируем для удобства
       uniqueCurrencies.sort();
       setCurrencies(uniqueCurrencies);
       console.log('Уникальные валюты:', uniqueCurrencies.length);
@@ -65,8 +63,6 @@ const CurrencyConverter = () => {
 
   const handleConvert = async (e) => {
     e.preventDefault();
-
-    // Добавлена проверка на пустое значение
     if (!amount) {
       setError('Введите сумму для конвертации');
       return;
@@ -160,12 +156,12 @@ const CurrencyConverter = () => {
             <input
               type='number'
               value={amount}
-              onChange={(e) => setAmount(e.target.value)} // Убрано parseFloat, так как нам нужна пустая строка
+              onChange={(e) => setAmount(e.target.value)}
               min='0.01'
               step='any'
               required
-              className='amount-input no-spinners' // Добавлен класс no-spinners
-              placeholder='Введите сумму' // Добавлен placeholder для подсказки
+              className='amount-input no-spinners'
+              placeholder='Введите сумму'
             />
           </div>
 

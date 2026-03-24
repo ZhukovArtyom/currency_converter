@@ -12,18 +12,11 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      // Здесь можно получить информацию о пользователе с бэкенда
-      // Например, через эндпоинт /auth/me/
       const fetchUser = async () => {
         try {
-          // Раскомментируйте, когда добавите эндпоинт /auth/me/
-          // const response = await api.get('/auth/me/');
-          // setUser(response.data);
-
-          // Пока используем заглушку
           setUser({
             username: localStorage.getItem('username') || 'User',
-            avatarUrl: null // Здесь можно добавить URL аватара
+            avatarUrl: null
           });
         } catch (error) {
           console.error('Error fetching user:', error);
@@ -43,7 +36,7 @@ export const AuthProvider = ({ children }) => {
       const response = await apiLogin(username, password);
       const { access_token } = response.data;
       localStorage.setItem('access_token', access_token);
-      localStorage.setItem('username', username); // Сохраняем username
+      localStorage.setItem('username', username);
       setToken(access_token);
       setUser({ username, avatarUrl: null });
       return { success: true };

@@ -42,8 +42,6 @@
   margin: 0;
   padding: 0;
 }
-
-/* Базовые стили для всех ссылок в навигации */
 .nav-links li a {
   color: white;
   text-decoration: none;
@@ -57,8 +55,6 @@
   background: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
 }
-
-/* Стили для профиля с инициалами */
 .profile-menu-item {
   list-style: none;
   margin-left: 1rem;
@@ -76,13 +72,9 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
-/* ТОЛЬКО ЗДЕСЬ ОСТАВЛЯЕМ АНИМАЦИЮ */
 .profile-avatar-container:hover {
   transform: translateY(-2px);
 }
-
-/* Убираем анимацию с кружка при наведении */
 .profile-initials-avatar {
   width: 45px;
   height: 45px;
@@ -96,41 +88,32 @@
   font-weight: bold;
   border: 2px solid white;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  transition: none; /* Убираем transition */
+  transition: none;
   text-transform: uppercase;
 }
-
-/* Убираем все эффекты при наведении на кружок */
 .profile-avatar-container:hover .profile-initials-avatar {
-  /* Убираем все изменения */
   border-color: white;
   transform: none;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   background: linear-gradient(135deg, #3498db, #2980b9);
 }
-
-/* Имя пользователя под аватаром */
 .profile-username {
   color: white;
   font-size: 0.85rem;
   margin-top: 4px;
   font-weight: 500;
   opacity: 0.9;
-  transition: none; /* Убираем transition */
+  transition: none;
   max-width: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: center;
 }
-
-/* Убираем эффекты при наведении на имя */
 .profile-avatar-container:hover .profile-username {
-  opacity: 0.9; /* Оставляем как есть */
-  color: white; /* Оставляем как есть */
+  opacity: 0.9;
+  color: white;
 }
-
-/* Стили для кнопок */
 .nav-links li a.btn-login,
 .nav-links li a.btn-register {
   display: inline-block;
@@ -149,8 +132,6 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-
-/* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
   .header .container {
     flex-direction: column;
@@ -185,8 +166,6 @@
     font-size: 0.9rem;
   }
 }
-
-/* Анимация пульсации для кружка (оставлена, но без изменений при наведении) */
 @keyframes avatarPulse {
   0% {
     box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4);
